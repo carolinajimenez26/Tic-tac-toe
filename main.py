@@ -27,22 +27,22 @@ curr_player = player1
  
 # -------- Main Program Loop -----------
 while not done:
+  clicked_pos = -1
   # --- Main event loop
   for event in pygame.event.get():
     if event.type == pygame.QUIT:
         done = True
     if event.type == pygame.MOUSEBUTTONDOWN:
       clicked_pos = pygame.mouse.get_pos()
-      grid.show_game_status()
-      moved = False
-      while (not moved):
-        moved = grid.set_position(clicked_pos[0], clicked_pos[1], curr_player.figure)
-      
-      curr_player = players_handler.toggle_player(player1, player2)
-      grid.show_game_status() # just for debugging
 
   # --- Game logic should go here
-
+  if (clicked_pos != -1):
+    grid.show_game_status() # just for debugging
+    moved = grid.set_position(clicked_pos[0], clicked_pos[1], curr_player.figure)
+    if (moved):
+      curr_player = players_handler.toggle_player(player1, player2)
+    
+    grid.show_game_status() # just for debugging
   # --- Screen-clearing code goes here
 
   # Here, we clear the screen to white. Don't put other drawing commands
