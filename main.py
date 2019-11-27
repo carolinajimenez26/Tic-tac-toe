@@ -1,6 +1,8 @@
 import pygame
 import colors
 from grid import Grid
+from player import Player
+import players_handler
  
 # ======= Initializations =========
 pygame.init()
@@ -17,6 +19,11 @@ done = False
 clock = pygame.time.Clock()
 
 grid = Grid()
+player1 = Player("X")
+player2 = Player("O")
+
+player1.set_turn(True)
+curr_player = player1
  
 # -------- Main Program Loop -----------
 while not done:
@@ -27,8 +34,12 @@ while not done:
     if event.type == pygame.MOUSEBUTTONDOWN:
       clicked_pos = pygame.mouse.get_pos()
       grid.show_game_status()
-      grid.set_position(clicked_pos[0], clicked_pos[1], "X")
-      grid.show_game_status()
+      moved = False
+      while (not moved):
+        moved = grid.set_position(clicked_pos[0], clicked_pos[1], curr_player.figure)
+      
+      curr_player = players_handler.toggle_player(player1, player2)
+      grid.show_game_status() # just for debugging
 
   # --- Game logic should go here
 

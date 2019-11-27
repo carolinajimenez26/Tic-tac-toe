@@ -25,15 +25,23 @@ class Grid:
   def draw_figures(self, surface):
     for row in range(len(self.game_status)):
       for col in range(len(self.game_status[0])):
-        print(row, col)
         if (self.game_status[row][col] != ""):
-          p1 = col * self.square_size + (self.square_size / 2)
-          p2 = row * self.square_size + (self.square_size / 2)
-          self.draw_figure(surface, p1, p2, self.game_status[row][col])
+          x = col * self.square_size + (self.square_size / 2)
+          y = row * self.square_size + (self.square_size / 2)
+          self.draw_figure(surface, x, y, self.game_status[row][col])
 
-  def draw_figure(self, surface, p1, p2, figure):
-    print(p1, p2)
-    pygame.draw.circle(surface, colors.RED, (p1, p2), self.square_size // 3)
+  def draw_figure(self, surface, x, y, figure):
+    print(x,y)
+    delta = self.square_size // 3
+    if (figure == "O"):
+      pygame.draw.circle(surface, colors.RED, (x, y), delta, width=0)
+    elif (figure == "X"):
+      p1 = (x - delta, y - delta)
+      p2 = (x + delta, y + delta)
+      pygame.draw.line(surface, colors.GREEN, p1, p2, 2) 
+      p1 = (x + delta, y - delta)
+      p2 = (x - delta, y + delta)
+      pygame.draw.line(surface, colors.GREEN, p1, p2, 2) 
 
   def is_valid(self, row, col):
     return row >= 0 and row < 3 and col >= 0 and col < 3 and self.game_status[row][col] == ""
