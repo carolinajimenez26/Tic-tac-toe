@@ -1,4 +1,6 @@
 import pygame
+from text import Text
+import colors
 
 class Button:
   def __init__(self, color, x, y, width, height, text=''):
@@ -7,18 +9,14 @@ class Button:
     self.y = y
     self.width = width
     self.height = height
-    self.text = text
+    size_text = 40
+    x_text = x + (width / 2 - width // 3)
+    y_text = y + (height / 2 - 8)
+    self.text = Text(size_text, x_text, y_text, text, colors.BLACK)
 
   def draw(self,surface):        
     pygame.draw.rect(surface, self.color, (self.x , self.y, self.width, self.height), 0)
-    
-    if self.text != '':
-      font = pygame.font.SysFont('comicsans', 40)
-      text = font.render(self.text, 1, (0,0,0))
-      # put the text in the middle
-      x = self.x + (self.width / 2 - text.get_width() / 2)
-      y = self.y + (self.height / 2 - text.get_height() / 2)
-      surface.blit(text, (x, y))
+    self.text.draw(surface)
 
   def was_clicked(self, x, y):
     return x >= self.x and x <= (self.x + self.width) and y >= self.y and y <= (self.y + self.height)
