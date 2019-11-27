@@ -4,7 +4,26 @@ import players_handler
 from text import Text
 import time
 
-def should_restart(screen, text_should_restart, button, clock):
+def get_winner_name(grid, player1, player2):
+  winner = ""
+  if (grid.winner == ""):
+    winner = "No one"
+  elif (grid.winner == player1.get_figure()):
+    winner = player1.get_name()
+  else:
+    winner = player2.get_name()
+  return winner
+
+def should_restart(elements):
+  screen = elements["screen"]
+  clock = elements["clock"]
+  grid = elements["grid"]
+  button = elements["button"]
+  player1 = elements["player1"]
+  player2 = elements["player2"]
+  curr_player = elements["curr_player"]
+  text_should_restart = elements["text_should_restart"]
+
   text_should_restart.draw(screen)
   count = 5
   x = 750
@@ -20,7 +39,12 @@ def should_restart(screen, text_should_restart, button, clock):
       return True
     
     text_count_down = Text(25, x, 550, str(count), colors.RED)
+    msg = "The winner is: " + get_winner_name(grid, player1, player2)
+    text_winner = Text(40, 710, 50, msg, colors.ORANGE)
+
+    # --- Drawing code should go here
     text_count_down.draw(screen)
+    text_winner.draw(screen)
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()
@@ -97,4 +121,4 @@ def run(elements):
     # --- Limit to 60 frames per second
     clock.tick(60)
 
-  return should_restart(screen, text_should_restart, button, clock)
+  return should_restart(elements)

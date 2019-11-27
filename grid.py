@@ -12,6 +12,7 @@ class Grid:
     ]
 
     self.game_status = [["","",""],["","",""],["","",""]]
+    self.winner = ""
 
   def draw(self, surface):
     thickness = 2
@@ -95,12 +96,14 @@ class Grid:
       if (self.game_status[0][col] == ""):
         continue
       if (self.check_all(0, col)):
+        self.winner = self.game_status[0][col]
         return True
     
     for row in range(len(self.game_status)):
       if (self.game_status[row][0] == ""):
         continue
       if (self.check_all(row, 0)):
+        self.winner = self.game_status[row][0]
         return True
 
     return False

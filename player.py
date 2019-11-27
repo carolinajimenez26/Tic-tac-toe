@@ -19,6 +19,9 @@ class Player:
   def get_name(self):
     return self.name
 
+  def get_figure(self):
+    return self.figure
+
   def play(self, grid):
     availables = []
     for row in range(len(grid)):
