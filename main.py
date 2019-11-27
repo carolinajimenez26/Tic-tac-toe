@@ -43,6 +43,9 @@ while not done:
       curr_player = players_handler.toggle_player(player1, player2)
     
     grid.show_game_status() # just for debugging
+
+  if (grid.is_end_game()):
+    done = True
   # --- Screen-clearing code goes here
 
   # Here, we clear the screen to white. Don't put other drawing commands
