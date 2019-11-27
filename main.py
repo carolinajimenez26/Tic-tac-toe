@@ -3,6 +3,7 @@ import colors
 from grid import Grid
 from player import Player
 import players_handler
+import time
  
 # ======= Initializations =========
 pygame.init()
@@ -19,8 +20,8 @@ done = False
 clock = pygame.time.Clock()
 
 grid = Grid()
-player1 = Player("X")
-player2 = Player("O")
+player1 = Player("X", True)
+player2 = Player("O", False)
 
 player1.set_turn(True)
 curr_player = player1
@@ -36,23 +37,23 @@ while not done:
       clicked_pos = pygame.mouse.get_pos()
 
   # --- Game logic should go here
-  if (clicked_pos != -1):
-    grid.show_game_status() # just for debugging
-    moved = grid.set_position(clicked_pos[0], clicked_pos[1], curr_player.figure)
+  if (curr_player.is_user() and clicked_pos != -1):
+    # grid.show_game_status() # just for debugging
+    moved = grid.set_position(clicked_pos[0], clicked_pos[1], curr_player.figure, True)
     if (moved):
       curr_player = players_handler.toggle_player(player1, player2)
     
-    grid.show_game_status() # just for debugging
+    # grid.show_game_status() # just for debugging
+
+  if (not curr_player.is_user()):
+    [row, col] = curr_player.play(grid.get_game_status())
+    if (row != -1):
+      grid.set_position(col, row, curr_player.figure, False)
+      curr_player = players_handler.toggle_player(player1, player2)
 
   if (grid.is_end_game()):
     done = True
   # --- Screen-clearing code goes here
-
-  # Here, we clear the screen to white. Don't put other drawing commands
-  # above this, or they will be erased with this command.
-
-  # If you want a background image, replace this clear with blit'ing the
-  # background image.
   screen.fill(colors.WHITE)
 
   # --- Drawing code should go here
@@ -64,6 +65,9 @@ while not done:
 
   # --- Limit to 60 frames per second
   clock.tick(60)
+  
+  if (done):
+    time.sleep(5) # to see what was the last move
  
 # Close the window and quit.
 pygame.quit()

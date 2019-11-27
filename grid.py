@@ -45,9 +45,13 @@ class Grid:
   def is_valid(self, row, col):
     return row >= 0 and row < 3 and col >= 0 and col < 3
 
-  def set_position(self, x, y, figure):
-    row = y // self.square_size
-    col = x // self.square_size
+  def set_position(self, x, y, figure, should_traslate):
+    if (should_traslate):
+      row = y // self.square_size
+      col = x // self.square_size
+    else:
+      row = y
+      col = x
     if (self.is_valid(row,col) and self.game_status[row][col] == ""):
       self.game_status[row][col] = figure
       return True
@@ -56,6 +60,9 @@ class Grid:
   def show_game_status(self):
     for row in range(len(self.game_status)):
       print(self.game_status[row])
+
+  def get_game_status(self):
+    return self.game_status
 
   def find_all_continuous_occurrances(self, row, col, target, delta_row, delta_col):
     if (not self.is_valid(row,col)):
