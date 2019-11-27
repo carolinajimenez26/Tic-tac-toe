@@ -5,9 +5,13 @@ class Grid:
   def __init__(self):
     self.square_size = 200
     self.lines = [
+      # start x from 0 to 3 times the square size
       ((0, self.square_size), (3 * self.square_size, self.square_size)), # horizontal
+      # this time y is 2 times square size down
       ((0, 2 * self.square_size), (3 * self.square_size, 2 * self.square_size)), # horizontal
+      # start y from 0 to 3 times square size
       ((self.square_size, 0), (self.square_size, 3 * self.square_size)), # vertical
+      # this time x is 2 times squares size right
       ((2 * self.square_size, 0), (2 * self.square_size, 3 * self.square_size)), # vertical
     ]
 
@@ -21,12 +25,14 @@ class Grid:
       p2 = line[1]
       pygame.draw.line(surface, colors.BLACK, p1, p2, thickness)
     
-    self.draw_figures(surface)
+    self.draw_figures(surface) # draw game_status
 
   def draw_figures(self, surface):
+    # in this case row and col goes from 0 to 3
     for row in range(len(self.game_status)):
       for col in range(len(self.game_status[0])):
         if (self.game_status[row][col] != ""):
+          # we need to get the center of the square
           x = col * self.square_size + (self.square_size / 2)
           y = row * self.square_size + (self.square_size / 2)
           self.draw_figure(surface, x, y, self.game_status[row][col])
@@ -34,11 +40,14 @@ class Grid:
   def draw_figure(self, surface, x, y, figure):
     delta = self.square_size // 3
     if (figure == "O"):
+      # the circle is drawn in the middle because it expands itself by its radius
       pygame.draw.circle(surface, colors.BLUE, (x, y), delta, width=2)
     elif (figure == "X"):
+      # draw left to right line
       p1 = (x - delta, y - delta)
       p2 = (x + delta, y + delta)
-      pygame.draw.line(surface, colors.GREEN, p1, p2, 2) 
+      pygame.draw.line(surface, colors.GREEN, p1, p2, 2)
+      # draw right to left line
       p1 = (x + delta, y - delta)
       p2 = (x - delta, y + delta)
       pygame.draw.line(surface, colors.GREEN, p1, p2, 2) 
@@ -47,16 +56,21 @@ class Grid:
     return row >= 0 and row < 3 and col >= 0 and col < 3
 
   def set_position(self, x, y, figure, should_traslate):
+    # this will add the corresponding figure to game_status
     if (should_traslate):
+      # when the user plays, it clicks on the screen and send that info here
       row = y // self.square_size
       col = x // self.square_size
     else:
+      # when the computer is playing it returns the desired move in the range of
+      # game_status lengths
       row = y
       col = x
     if (self.is_valid(row,col) and self.game_status[row][col] == ""):
       self.game_status[row][col] = figure
       return True
     return False
+    # we need to return if the movement was done
 
   def show_game_status(self):
     for row in range(len(self.game_status)):
@@ -84,19 +98,21 @@ class Grid:
       target = self.game_status[row][col]
       new_row = row + dir_rows[i]
       new_col = col + dir_cols[i]
+      # check if going in the same direction I can find 2 more figures equals to mine
       target_ocurrances = self.find_all_continuous_occurrances(new_row, new_col, 
                                                 target, dir_rows[i], dir_cols[i])
-      if (target_ocurrances == 2):
+      if (target_ocurrances == 2): # +1 of my own figure equals 3
         return True
     
     return False
 
   def there_is_winner(self):
+    # There is no need to check more than the first row and the first column
     for col in range(len(self.game_status[0])):
       if (self.game_status[0][col] == ""):
         continue
-      if (self.check_all(0, col)):
-        self.winner = self.game_status[0][col]
+      if (self.check_all(0, col)): # check if there is a winner from this cell
+        self.winner = self.game_status[0][col] # save the winner for later
         return True
     
     for row in range(len(self.game_status)):
@@ -109,6 +125,7 @@ class Grid:
     return False
 
   def there_is_tie(self):
+    # checks if all the squares are taken
     for row in range(len(self.game_status)):
       for col in range(len(self.game_status[0])):
         if (self.game_status[row][col] == ""):

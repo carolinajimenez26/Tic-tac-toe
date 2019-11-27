@@ -25,7 +25,7 @@ def should_restart(elements):
   text_should_restart = elements["text_should_restart"]
 
   text_should_restart.draw(screen)
-  count = 5
+  count = 5 # let the user decide in 5 seconds
   x = 750
   while (count > 0):
     clicked_pos = -1
@@ -35,6 +35,7 @@ def should_restart(elements):
       if event.type == pygame.MOUSEBUTTONDOWN:
         clicked_pos = pygame.mouse.get_pos()
 
+    # If the user clicks the re-start button, end this current game and start a new one
     if (clicked_pos != -1 and button.was_clicked(clicked_pos[0], clicked_pos[1])):
       return True
     
@@ -56,6 +57,7 @@ def should_restart(elements):
     count -= 1
     x += 50
 
+  # The user didn't press the re-start button, the end will be close
   return False
 
 def run(elements):
@@ -83,6 +85,7 @@ def run(elements):
       time.sleep(1)
 
     # --- Game logic should go here
+    # If the user clicks the re-start button, end this current game and start a new one
     if (clicked_pos != -1 and button.was_clicked(clicked_pos[0], clicked_pos[1])):
       return True
 
@@ -91,7 +94,7 @@ def run(elements):
       moved = grid.set_position(clicked_pos[0], clicked_pos[1], curr_player.figure, True)
       if (moved):
         curr_player = players_handler.toggle_player(player1, player2)
-      wait = True
+      wait = True # this is needed at the end of the game, avoid the computer move
       # grid.show_game_status() # just for debugging
 
     if (not curr_player.is_user() and not wait):
@@ -121,4 +124,5 @@ def run(elements):
     # --- Limit to 60 frames per second
     clock.tick(60)
 
-  return should_restart(elements)
+  # if we get here is because there was a winner of a tie
+  return should_restart(elements) # ask the user if they want to start again

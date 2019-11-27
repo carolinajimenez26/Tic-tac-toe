@@ -23,6 +23,7 @@ class Player:
     return self.figure
 
   def play(self, grid):
+    # it will choose randomly one empty cell from the ones that are available
     availables = []
     for row in range(len(grid)):
       for col in range(len(grid[0])):

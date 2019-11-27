@@ -15,6 +15,7 @@ class Button:
     if self.text != '':
       font = pygame.font.SysFont('comicsans', 40)
       text = font.render(self.text, 1, (0,0,0))
+      # put the text in the middle
       x = self.x + (self.width / 2 - text.get_width() / 2)
       y = self.y + (self.height / 2 - text.get_height() / 2)
       surface.blit(text, (x, y))
