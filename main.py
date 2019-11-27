@@ -2,12 +2,12 @@ import pygame
 import colors
 from grid import Grid
 from player import Player
-import time
 from button import Button
 from game import run
+from text import Text
 
 def initialize():
-  size = (1000, 600) # [width, height]
+  size = (1100, 600) # [width, height]
   screen = pygame.display.set_mode(size)
   
   pygame.display.set_caption("Tic-tac-toe")
@@ -16,7 +16,9 @@ def initialize():
   clock = pygame.time.Clock()
 
   grid = Grid()
-  button = Button(colors.PURPLE, 750, 400, 200, 100, "START")
+  button = Button(colors.PURPLE, 750, 300, 200, 100, "RE-START")
+  msg = "If you want to play again press RE-START button"
+  text_should_restart = Text(25, 650, 450, msg, colors.RED)
   player1 = Player("X", True)
   player2 = Player("O", False)
 
@@ -31,15 +33,15 @@ def initialize():
   elements["player1"] = player1
   elements["player2"] = player2
   elements["curr_player"] = curr_player
+  elements["text_should_restart"] = text_should_restart
   return elements
 
 if __name__ == "__main__":
   pygame.init()
   elements = initialize()
-  done = False
   re_start = run(elements)
-  while (re_start and not done):
+  while (re_start):
+    print("RE-START")
     elements = initialize()
     re_start = run(elements)
-    
   pygame.quit()
