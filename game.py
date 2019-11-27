@@ -55,6 +55,9 @@ def run(elements):
       if event.type == pygame.MOUSEBUTTONDOWN:
         clicked_pos = pygame.mouse.get_pos()
 
+    if (curr_player.get_name() == "computer"): # make it slower to show the message
+      time.sleep(1)
+
     # --- Game logic should go here
     if (clicked_pos != -1 and button.was_clicked(clicked_pos[0], clicked_pos[1])):
       return True
@@ -75,12 +78,17 @@ def run(elements):
 
     if (grid.is_end_game()):
       done = True
+
+    msg = curr_player.get_name() + "'s turn"
+    text_player = Text(50, 750, 150, msg, colors.PINK)
+
     # --- Screen-clearing code goes here
     screen.fill(colors.WHITE)
 
     # --- Drawing code should go here
     grid.draw(screen)
     button.draw(screen)
+    text_player.draw(screen)
 
     # --- Go ahead and update the screen with what we've drawn.
     pygame.display.flip()

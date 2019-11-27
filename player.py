@@ -1,10 +1,11 @@
 import random
 
 class Player:
-  def __init__(self, figure, user):
+  def __init__(self, figure, user, name):
     self.figure = figure
     self.turn = False
     self.user = user
+    self.name = name
 
   def set_turn(self, turn):
     self.turn = turn
@@ -14,6 +15,9 @@ class Player:
 
   def is_user(self):
     return self.user
+
+  def get_name(self):
+    return self.name
 
   def play(self, grid):
     availables = []

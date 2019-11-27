@@ -19,8 +19,8 @@ def initialize():
   button = Button(colors.PURPLE, 750, 300, 200, 100, "RE-START")
   msg = "If you want to play again press RE-START button"
   text_should_restart = Text(25, 650, 450, msg, colors.RED)
-  player1 = Player("X", True)
-  player2 = Player("O", False)
+  player1 = Player("X", True, "user")
+  player2 = Player("O", False, "computer")
 
   player1.set_turn(True)
   curr_player = player1
@@ -41,7 +41,6 @@ if __name__ == "__main__":
   elements = initialize()
   re_start = run(elements)
   while (re_start):
-    print("RE-START")
     elements = initialize()
     re_start = run(elements)
   pygame.quit()
