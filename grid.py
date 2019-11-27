@@ -33,7 +33,7 @@ class Grid:
   def draw_figure(self, surface, x, y, figure):
     delta = self.square_size // 3
     if (figure == "O"):
-      pygame.draw.circle(surface, colors.RED, (x, y), delta, width=0)
+      pygame.draw.circle(surface, colors.BLUE, (x, y), delta, width=2)
     elif (figure == "X"):
       p1 = (x - delta, y - delta)
       p2 = (x + delta, y + delta)

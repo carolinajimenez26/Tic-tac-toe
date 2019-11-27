@@ -7,7 +7,7 @@ import time
 def should_restart(screen, text_should_restart, button, clock):
   text_should_restart.draw(screen)
   count = 5
-  x = 700
+  x = 750
   while (count > 0):
     clicked_pos = -1
     for event in pygame.event.get():
