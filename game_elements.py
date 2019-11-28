@@ -3,6 +3,7 @@ class GameElements:
     self.screen = elements["screen"]
     self.clock = elements["clock"]
     self.grid = elements["grid"]
+    self.grid_ui = elements["grid_ui"]
     self.button = elements["button"]
     self.player1 = elements["player1"]
     self.player2 = elements["player2"]

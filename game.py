@@ -4,15 +4,11 @@ import players_handler
 from text import Text
 import time
 
-def get_winner_name(grid, player1, player2):
-  winner = ""
-  if (grid.winner == ""):
-    winner = "No one"
-  elif (grid.winner == player1.get_figure()):
-    winner = player1.get_name()
-  else:
-    winner = player2.get_name()
-  return winner
+def draw_figures_grid(game_status, grid_ui, surface):
+  for row in range(len(game_status)):
+    for col in range(len(game_status[0])):
+      if (game_status[row][col] != ""):
+        grid_ui.draw_figure(surface, col, row, game_status[row][col])
 
 def should_restart(elements):
   elements.text_should_restart.draw(elements.screen)
@@ -33,8 +29,9 @@ def should_restart(elements):
       return True
     
     text_count_down = Text(25, x, 550, str(count), colors.RED)
-    msg = "The winner is: " + get_winner_name(elements.grid, elements.player1, 
-                                              elements.player2)
+    msg = "The winner is: " + players_handler.get_winner_name(elements.grid, 
+                                                              elements.player1, 
+                                                              elements.player2)
     text_winner = Text(40, 710, 50, msg, colors.ORANGE)
 
     # --- Drawing code should go here
@@ -78,7 +75,7 @@ def run(elements):
       return True
 
     if (elements.curr_player.is_user() and clicked_pos != -1):
-      x, y = elements.grid.convert_ui_position(clicked_pos[0], clicked_pos[1])
+      x, y = elements.grid_ui.convert_ui_position(clicked_pos[0], clicked_pos[1])
       moved = elements.grid.set_position(x, y, elements.curr_player.figure)
       if (moved):
         elements.curr_player = players_handler.toggle_player(elements.player1, 
@@ -102,7 +99,9 @@ def run(elements):
     elements.screen.fill(colors.WHITE)
 
     # --- Drawing code should go here
-    elements.grid.draw(elements.screen)
+    elements.grid_ui.draw(elements.screen)
+    draw_figures_grid(elements.grid.get_game_status(), elements.grid_ui, 
+                      elements.screen)
     elements.button.draw(elements.screen)
     text_player.draw(elements.screen)
 

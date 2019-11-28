@@ -1,6 +1,7 @@
 import pygame
 import colors
-from grid import Grid
+from grid_logic import Grid
+from grid_ui import GridUI
 from player import Player
 from button import Button
 from game import run
@@ -17,6 +18,7 @@ def initialize():
   clock = pygame.time.Clock()
 
   grid = Grid()
+  grid_ui = GridUI()
   button = Button(colors.PURPLE, 750, 300, 200, 100, "RE-START")
   msg = "If you want to play again press RE-START button"
   text_should_restart = Text(25, 650, 450, msg, colors.RED)
@@ -30,6 +32,7 @@ def initialize():
   elements["screen"] = screen
   elements["clock"] = clock
   elements["grid"] = grid
+  elements["grid_ui"] = grid_ui
   elements["button"] = button
   elements["player1"] = player1
   elements["player2"] = player2
