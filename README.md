@@ -57,3 +57,13 @@ And enjoy!
 
 **Note**: I'm using python2 since there is a problem with my Mac OS, see:
 `https://github.com/pygame/pygame/issues/555`
+
+## Tests
+
+You can find some tests in /test.
+
+To run:
+
+```
+python2 -m pytest
+```

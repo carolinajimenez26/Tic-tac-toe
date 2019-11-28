@@ -68,7 +68,7 @@ class Grid:
 
     return False
 
-  def there_is_tie(self):
+  def all_taken(self):
     # checks if all the squares are taken
     for row in range(len(self.game_status)):
       for col in range(len(self.game_status[0])):
@@ -77,4 +77,4 @@ class Grid:
     return True
 
   def is_end_game(self):
-    return self.there_is_winner() or self.there_is_tie()
+    return self.there_is_winner() or self.all_taken()
