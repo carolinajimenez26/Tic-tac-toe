@@ -1,7 +1,5 @@
 import pytest
-import sys
-sys.path.append('../')
-from player import Player
+from game.player import Player
 
 def test_get_turn():
   player = Player("X", True, "user")

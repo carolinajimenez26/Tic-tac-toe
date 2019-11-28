@@ -60,7 +60,7 @@ And enjoy!
 
 ## Tests
 
-You can find some tests in /test.
+You can find some tests in `/tests`.
 
 To run:
 

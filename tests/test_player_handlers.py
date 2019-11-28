@@ -1,15 +1,13 @@
 import pytest
-import sys
-sys.path.append('../')
-from player import Player
-from grid_logic import Grid
-import players_handler
+from game.player import Player
+from game.grid_logic import Grid
+import game.players_handler
 
 def test_toggle_player():
   player1 = Player("X", True, "user")
   player1.set_turn(True)
   player2 = Player("O", False, "computer")
-  assert players_handler.toggle_player(player1, player2) == player2
+  assert game.players_handler.toggle_player(player1, player2) == player2
 
 def test_get_winner_name():
   player1 = Player("X", True, "user")
@@ -33,4 +31,4 @@ def test_get_winner_name():
 
   for test in test_cases:
     grid.winner = test["figure"]
-    assert players_handler.get_winner_name(grid, player1, player2) == test["expected"]
+    assert game.players_handler.get_winner_name(grid, player1, player2) == test["expected"]

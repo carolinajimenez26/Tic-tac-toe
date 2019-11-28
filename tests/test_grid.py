@@ -1,7 +1,5 @@
 import pytest
-import sys
-sys.path.append('../')
-from grid_logic import Grid
+from game.grid_logic import Grid
 
 def test_set_position():
   grid = Grid()
