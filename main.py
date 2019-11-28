@@ -5,6 +5,7 @@ from player import Player
 from button import Button
 from game import run
 from text import Text
+from game_elements import GameElements
 
 def initialize():
   size = (1100, 600) # [width, height]
@@ -34,7 +35,8 @@ def initialize():
   elements["player2"] = player2
   elements["curr_player"] = curr_player
   elements["text_should_restart"] = text_should_restart
-  return elements
+  game_elements = GameElements(elements)
+  return game_elements
 
 if __name__ == "__main__":
   pygame.init()

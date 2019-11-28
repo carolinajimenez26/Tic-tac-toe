@@ -55,22 +55,15 @@ class Grid:
   def is_valid(self, row, col):
     return row >= 0 and row < 3 and col >= 0 and col < 3
 
-  def set_position(self, x, y, figure, should_traslate):
-    # this will add the corresponding figure to game_status
-    if (should_traslate):
-      # when the user plays, it clicks on the screen and send that info here
-      row = y // self.square_size
-      col = x // self.square_size
-    else:
-      # when the computer is playing it returns the desired move in the range of
-      # game_status lengths
-      row = y
-      col = x
+  def convert_ui_position(self, x, y):
+    return x // self.square_size, y // self.square_size
+
+  def set_position(self, col, row, figure):
+    """Returns if the new position was valid"""
     if (self.is_valid(row,col) and self.game_status[row][col] == ""):
       self.game_status[row][col] = figure
       return True
     return False
-    # we need to return if the movement was done
 
   def show_game_status(self):
     for row in range(len(self.game_status)):
@@ -86,7 +79,8 @@ class Grid:
     if (self.game_status[row][col] == target):
       new_row = row + delta_row
       new_col = col + delta_col
-      return 1 + self.find_all_continuous_occurrances(new_row, new_col, target, delta_row, delta_col)
+      return 1 + self.find_all_continuous_occurrances(new_row, new_col, target, 
+                                                      delta_row, delta_col)
     
     return 0
 
