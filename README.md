@@ -49,7 +49,7 @@ deactivate
 ## Run game
 
 ```
-python2 main.py
+python2 game/main.py
 ```
 
 And enjoy!
